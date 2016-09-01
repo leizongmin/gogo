@@ -24,6 +24,8 @@ register('workspace', 'create virtual workspace', function () {
     `mkdir -p ${pwd}/vendor`,
     `mkdir -p ${workspace}/vendor`,
     `ln -s ${pwd}/vendor ${workspace}/vendor/src`,
+    `mkdir -p -p ${workspace}/vendor/pkg`,
+    `ln -s ${workspace}/vendor/pkg ${workspace}/pkg`,
   ]);
 });
 
