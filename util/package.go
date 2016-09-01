@@ -9,16 +9,26 @@ import (
 )
 
 type PackageInfo struct {
-	Package  string       `yaml:"package"`
-	Version  string       `yaml:"version"`
-	Author   string       `yaml:"author"`
-	Homepage string       `yaml:"homepage"`
-	Import   []ImportInfo `yaml:"import"`
+	Package   string       `yaml:"package"`
+	Version   string       `yaml:"version"`
+	Author    string       `yaml:"author"`
+	Homepage  string       `yaml:"homepage"`
+	Import    []ImportInfo `yaml:"import"`
+	Workspace WorkspaceInfo
 }
 
 type ImportInfo struct {
 	Package string `yaml:"package"`
 	Version string `yaml:"version"`
+}
+
+type WorkspaceInfo struct {
+	ProjectDir          string
+	VendorDir           string
+	VirtualWorkspaceDir string
+	VirtualVendorDir    string
+	VirtualPkgDir       string
+	BinDir              string
 }
 
 func GetPackageInfo(dir string) (*PackageInfo, error) {
@@ -29,7 +39,17 @@ func GetPackageInfo(dir string) (*PackageInfo, error) {
 	}
 	pkg := &PackageInfo{}
 	err = yaml.Unmarshal(fileData, &pkg)
-	return pkg, err
+	if err != nil {
+		return nil, err
+	}
+	pkg.Workspace = WorkspaceInfo{
+		ProjectDir:          dir,
+		VendorDir:           filepath.Join(dir, "vendor"),
+		VirtualWorkspaceDir: filepath.Join(dir, "_workspace"),
+		VirtualPkgDir:       filepath.Join(dir, "_workspace", "pkg"),
+		VirtualVendorDir:    filepath.Join(dir, "_workspace", "vendor"),
+	}
+	return pkg, nil
 }
 
 func GetPackageInfoFromCurrentDir() (*PackageInfo, error) {

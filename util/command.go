@@ -30,6 +30,10 @@ func (c *Command) SetEnv(name string, value string) {
 	c.env = append(c.env, fmt.Sprintf("%s=%s", name, value))
 }
 
+func (c *Command) SetEnvLine(line string) {
+	c.env = append(c.env, line)
+}
+
 func (c *Command) SetDir(dir string) {
 	c.dir = dir
 }
