@@ -23,8 +23,8 @@ type ImportInfo struct {
 }
 
 type DirInfo struct {
-	Workspace string
 	Pwd       string
+	Workspace string
 }
 
 func GetPackageInfo(dir string) (*PackageInfo, error) {
@@ -39,8 +39,8 @@ func GetPackageInfo(dir string) (*PackageInfo, error) {
 		return nil, err
 	}
 	pkg.Dir = DirInfo{
-		Workspace: filepath.Join(dir, "_workspace"),
 		Pwd:       dir,
+		Workspace: filepath.Join(dir, "_workspace"),
 	}
 	return pkg, nil
 }

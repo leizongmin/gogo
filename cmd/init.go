@@ -1,31 +1,10 @@
 package cmd
 
-import (
-	"fmt"
-	"log"
-
-	"path/filepath"
-
-	"github.com/leizongmin/gogo/util"
-)
+import "path/filepath"
 
 func Init(args []string) {
 
-	pkg, err := util.GetPackageInfoFromCurrentDir()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(pkg)
-
-	exec := func(name string, args ...string) {
-		cmd, err := util.NewCommand(name, args...)
-		if err != nil {
-			log.Fatal(err)
-		}
-		cmd.SetEnv("GOPATH", pkg.Dir.Workspace)
-		cmd.SetDir(pkg.Dir.Pwd)
-		cmd.Run()
-	}
+	pkg, exec := getPackageInfoAndExec(false)
 
 	// `mkdir -p ${workspace}/src/${pkgParent}`,
 	// `ln -s ${pwd} ${workspace}/src/${pkg}`,

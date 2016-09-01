@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 type Command struct {
@@ -19,7 +20,7 @@ func NewCommand(path string, args ...string) (*Command, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("exec:", fullPath, args)
+	fmt.Println("exec:", fullPath, strings.Join(args, " "))
 	return &Command{
 		cmd: exec.Command(fullPath, args...),
 		env: os.Environ(),
@@ -27,7 +28,7 @@ func NewCommand(path string, args ...string) (*Command, error) {
 }
 
 func (c *Command) SetEnv(name string, value string) {
-	c.env = append(c.env, fmt.Sprintf("%s=%s", name, value))
+	c.env = append(filterEnv(c.env, name), fmt.Sprintf("%s=%s", name, value))
 }
 
 func (c *Command) SetEnvLine(line string) {
@@ -47,4 +48,15 @@ func (c *Command) Run() {
 	if err := c.cmd.Run(); err != nil {
 		fmt.Println("exec:", err)
 	}
+}
+
+func filterEnv(env []string, removeName string) []string {
+	removeName = removeName + "="
+	ret := []string{}
+	for _, v := range env {
+		if strings.Index(v, removeName) != 0 {
+			ret = append(ret, v)
+		}
+	}
+	return ret
 }
