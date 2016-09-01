@@ -54,3 +54,9 @@ register('vendor', 'add dependencies', function () {
   env.GOPATH = gopath;
   exec(`go get ${argv.join(' ')}`);
 });
+
+register('go', 'run go command in GOPATH', function () {
+  autoInitWorkspace();
+  env.GOPATH = workspace;
+  exec(`go ${argv.join(' ')}`);
+});
