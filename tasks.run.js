@@ -1,6 +1,6 @@
 'use strict';
 
-const pkg = 'github.com/leizongmin/leisp';
+const pkg = 'github.com/leizongmin/gogo';
 
 const pkgParent = path.dirname(pkg);
 const workspace = path.resolve(pwd, '_workspace');
