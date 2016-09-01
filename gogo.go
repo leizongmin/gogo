@@ -15,6 +15,8 @@ func main() {
 	switch os.Args[1] {
 	case "init":
 		cmd.Init(args)
+	case "clean":
+		cmd.Clean(args)
 	case "vendor":
 		cmd.Vendor(args)
 	case "build":
