@@ -37,10 +37,6 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	return pkg, exec
 }
 
-func Build(args []string) {
-	fmt.Print()
-}
-
 func Version(args []string) {
 
 }
