@@ -1,4 +1,4 @@
-package: github.com/leizongmin/example
+package: github.com/leizongmin/gogo
 version: 0.0.0
 import:
 - package: gopkg.in/yaml.v2
