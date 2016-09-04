@@ -47,6 +47,11 @@ $ gogo - env
 $ gogo clean
 ```
 
+## 工作目录`_workspace`
+
+在执行`gogo init`之后，会创建一个`_workspace`目录，实际上这个目录为`GOPATH`环境变量的值，在配置编辑器的`GOPATH`时可设置为此值。
+可执行`gogo - env`查看 Go 打印出来的环境变量值。
+
 
 ## `gogo`开发环境配置
 
