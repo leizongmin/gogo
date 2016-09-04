@@ -1,0 +1,4 @@
+package: github.com/leizongmin/example
+version: 0.0.0
+import:
+- package: gopkg.in/yaml.v2
