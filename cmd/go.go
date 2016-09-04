@@ -4,7 +4,14 @@ import "fmt"
 
 func Go(args []string) {
 
-	_, exec := getPackageInfoAndExec(false)
+	pkg, exec := getPackageInfoAndExec(false)
+
+	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
+		fmt.Println(`
+"_workspace" directory doesn't exists, please run "gogo init" before.
+		`)
+		return
+	}
 
 	exec("go", args...)
 

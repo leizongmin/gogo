@@ -12,6 +12,13 @@ func Import(args []string) {
 
 	pkg, exec := getPackageInfoAndExec(true)
 
+	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
+		fmt.Println(`
+"_workspace" directory doesn't exists, please run "gogo init" before.
+		`)
+		return
+	}
+
 	// `go get ${argv.join(' ')}`
 
 	newArgs := combineStringArray([]string{"get"}, args)

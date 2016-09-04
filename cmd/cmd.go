@@ -6,6 +6,8 @@ import (
 
 	"path/filepath"
 
+	"os"
+
 	"github.com/leizongmin/gogo/util"
 )
 
@@ -51,4 +53,24 @@ func findInStringArray(arr []string, str string) int {
 		}
 	}
 	return -1
+}
+
+// exists returns whether the given file or directory exists or not
+func exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return true, err
+}
+
+func isWorkspaceDirExists(dir string) bool {
+	ret, err := exists(filepath.Join(dir, "_workspace"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ret
 }
