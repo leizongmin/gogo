@@ -1,8 +1,6 @@
 # gogo
 简单易用的Go包管理工具
 
-**本项目正在开发中**
-
 ## 安装
 
 ```bash
@@ -47,6 +45,26 @@ $ gogo - env
 
 # 清理
 $ gogo clean
+```
+
+
+## `gogo`开发环境配置
+
+```bash
+# 安装 gogo 工具
+$ go install github.com/leizongmin/gogo
+
+# 下载代码
+$ git clone https://github.com/leizongmin/gogo.git && cd gogo
+
+# 安装依赖模块
+$ gogo install
+
+# 修改文件之后，编译代码
+$ gogo build
+
+# 执行编译出来的 gogo 命令
+$ ./bin/gogo
 ```
 
 
