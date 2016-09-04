@@ -11,3 +11,11 @@ func Version(args []string) {
 	fmt.Printf("gogo version %s\n", version)
 
 }
+
+func VersionHelp(args []string) {
+	fmt.Println(`
+usage: gogo version
+
+print gogo version information.
+	`)
+}

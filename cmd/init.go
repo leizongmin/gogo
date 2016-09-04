@@ -33,3 +33,11 @@ func Init(args []string) {
 	fmt.Println("\nOK")
 
 }
+
+func InitHelp(args []string) {
+	fmt.Println(`
+usage: gogo init
+
+init workspace directory according to package.yaml file.
+	`)
+}

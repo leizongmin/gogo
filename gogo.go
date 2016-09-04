@@ -23,6 +23,8 @@ func main() {
 		cmd.Import(args)
 	case "init":
 		cmd.Init(args)
+	case "install":
+		cmd.Install(args)
 	case "version":
 		cmd.Version(args)
 	case "help":
@@ -32,17 +34,3 @@ func main() {
 	}
 
 }
-
-//func test() {
-//	a, err := util.NewCommand("node", "-p", "console.log(process.env)")
-//	//	a, err := util.NewCommand("tree", "-d")
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	dir, err := os.Getwd()
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	a.SetEnv("GOPATH", dir)
-//	a.Run()
-//}

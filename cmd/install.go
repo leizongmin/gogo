@@ -3,7 +3,7 @@ package cmd
 import "path/filepath"
 import "fmt"
 
-func Build(args []string) {
+func Install(args []string) {
 
 	pkg, exec := getPackageInfoAndExec(false)
 
@@ -17,10 +17,10 @@ func Build(args []string) {
 
 }
 
-func BuildHelp(args []string) {
+func InstallHelp(args []string) {
 	fmt.Println(`
-usage: gogo build
+usage: gogo install
 
-compile the current project.
+install all import packages according to package.yaml file
 	`)
 }

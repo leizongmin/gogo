@@ -17,3 +17,11 @@ func Import(args []string) {
 	fmt.Println("\nOK")
 
 }
+
+func ImportHelp(args []string) {
+	fmt.Println(`
+usage: gogo import package1 package2 package3
+
+add import packages and save to package.yaml file
+	`)
+}

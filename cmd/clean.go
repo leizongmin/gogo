@@ -23,3 +23,11 @@ func Clean(args []string) {
 	fmt.Println("\nOK")
 
 }
+
+func CleanHelp(args []string) {
+	fmt.Println(`
+usage: gogo clean
+
+remove object files from current project directory.
+	`)
+}
