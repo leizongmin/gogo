@@ -6,8 +6,6 @@ func Install(args []string) {
 
 	pkg, exec := getPackageInfoAndExec(true)
 
-	fmt.Println(exec, pkg.Import)
-
 	if len(pkg.Package) > 0 {
 		packages := make([]string, len(pkg.Import))
 		for i, v := range pkg.Import {
