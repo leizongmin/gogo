@@ -13,16 +13,16 @@ func main() {
 
 	var args = os.Args[2:]
 	switch os.Args[1] {
-	case "init":
-		cmd.Init(args)
-	case "clean":
-		cmd.Clean(args)
-	case "vendor":
-		cmd.Vendor(args)
 	case "build":
 		cmd.Build(args)
-	case "run":
-		cmd.Run(args)
+	case "clean":
+		cmd.Clean(args)
+	case "-":
+		cmd.Go(args)
+	case "import":
+		cmd.Import(args)
+	case "init":
+		cmd.Init(args)
 	case "version":
 		cmd.Version(args)
 	case "help":

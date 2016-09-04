@@ -13,4 +13,6 @@ func Build(args []string) {
 
 	exec("go", "build", "-o", out, pkg.Package)
 
+	fmt.Println("\nOK")
+
 }

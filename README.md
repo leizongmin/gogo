@@ -32,9 +32,9 @@ import:
 $ gogo init
 
 # 添加依赖并保存到 package.yaml
-$ gogo vendor github.com/leizongmin/leisp
+$ gogo import github.com/leizongmin/leisp
 # 如果要更新可以添加 -u 参数
-$ gogo vendor -u github.com/leizongmin/leisp
+$ gogo import -u github.com/leizongmin/leisp
 
 # 根据 pakcage.yaml 安装所有依赖
 $ gogo install
@@ -44,9 +44,6 @@ $ gogo build
 
 # 执行 go 命令，以下命令相当于 go env
 $ gogo - env
-
-# 执行 go 文件
-$ gogo run xxx.go
 
 # 清理
 $ gogo clean

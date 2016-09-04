@@ -1,6 +1,9 @@
 package cmd
 
-import "path/filepath"
+import (
+	"fmt"
+	"path/filepath"
+)
 
 func Init(args []string) {
 
@@ -26,5 +29,7 @@ func Init(args []string) {
 
 	exec("mkdir", "-p", filepath.Join(workspace, "vendor", "pkg"))
 	exec("ln", "-s", filepath.Join(workspace, "vendor", "pkg"), filepath.Join(workspace, "pkg"))
+
+	fmt.Println("\nOK")
 
 }

@@ -1,6 +1,9 @@
 package cmd
 
-import "path/filepath"
+import (
+	"fmt"
+	"path/filepath"
+)
 
 func Clean(args []string) {
 
@@ -16,5 +19,7 @@ func Clean(args []string) {
 	exec("rm", "-rf", workspace)
 	exec("rm", "-rf", filepath.Join(pwd, "vendor"))
 	exec("rm", "-rf", filepath.Join(pwd, "bin"))
+
+	fmt.Println("\nOK")
 
 }

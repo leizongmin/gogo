@@ -36,7 +36,3 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 
 	return pkg, exec
 }
-
-func Help(args []string) {
-	fmt.Println("Help")
-}
