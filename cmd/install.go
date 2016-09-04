@@ -4,7 +4,7 @@ import "fmt"
 
 func Install(args []string) {
 
-	pkg, exec := getPackageInfoAndExec(false)
+	pkg, exec := getPackageInfoAndExec(true)
 
 	fmt.Println(exec, pkg.Import)
 
