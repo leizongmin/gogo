@@ -36,3 +36,10 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 
 	return pkg, exec
 }
+
+func combineStringArray(a []string, b []string) []string {
+	ret := make([]string, len(a)+len(b))
+	copy(ret, a)
+	copy(ret[len(a):], b)
+	return ret
+}

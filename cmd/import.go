@@ -8,10 +8,7 @@ func Import(args []string) {
 
 	// `go get ${argv.join(' ')}`
 
-	newArgs := make([]string, len(args)+1)
-	newArgs[0] = "get"
-	copy(newArgs[1:], args)
-
+	newArgs := combineStringArray([]string{"get"}, args)
 	exec("go", newArgs...)
 
 	fmt.Println("\nOK")

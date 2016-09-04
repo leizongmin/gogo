@@ -1,17 +1,21 @@
 package cmd
 
-import "path/filepath"
 import "fmt"
 
 func Install(args []string) {
 
 	pkg, exec := getPackageInfoAndExec(false)
 
-	// `go build -o ${out} ${pkg}`
+	fmt.Println(exec, pkg.Import)
 
-	out := fmt.Sprintf("bin/%s", filepath.Base(pkg.Package))
-
-	exec("go", "build", "-o", out, pkg.Package)
+	if len(pkg.Package) > 0 {
+		packages := make([]string, len(pkg.Import))
+		for i, v := range pkg.Import {
+			packages[i] = v.Package
+		}
+		newArgs := combineStringArray([]string{"get"}, packages)
+		exec("go", newArgs...)
+	}
 
 	fmt.Println("\nOK")
 
