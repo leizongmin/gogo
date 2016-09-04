@@ -43,3 +43,12 @@ func combineStringArray(a []string, b []string) []string {
 	copy(ret[len(a):], b)
 	return ret
 }
+
+func findInStringArray(arr []string, str string) int {
+	for i, v := range arr {
+		if v == str {
+			return i
+		}
+	}
+	return -1
+}
