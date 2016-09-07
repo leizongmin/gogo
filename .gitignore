@@ -27,3 +27,4 @@ _testmain.go
 .idea
 _workspace
 bin
+vendor
