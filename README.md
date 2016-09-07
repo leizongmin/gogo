@@ -9,47 +9,52 @@ $ go install github.com/leizongmin/gogo
 
 ## 使用
 
-首先创建包描述文件`package.yaml`:
+首先在包的根目录下创建包描述文件`package.yaml`:
 
 ```yaml
 package: github.com/leizongmin/example
 version: 0.0.0
-import:
-- package: gopkg.in/yaml.v2
-- package: github.com/Masterminds/vcs
-  version: ^1.2.0
-- package: github.com/codegangsta/cli
-- package: github.com/Masterminds/semver
-  version: ^1.0.0
 ```
 
-命令：
+说明：
+
++ `package`为包的完整路径，比如 GitHub 用户名是`leizongmin`，要创建的包是`example`，那么包的完整路径就是`github.com/leizongmin/example`。别人在使用时可以通过`import "github.com/leizongmin/example"`来引入
++ `version`为当前包的版本号，目前相关功能暂未实现
+
+创建完`package.yaml`文件后，可以在包的根目录下执行以下命令：
 
 ```bash
-# 初始化，创建虚拟 _workspace 目录
+# 第一步：初始化，创建虚拟 _workspace 目录和 vendor 目录
 $ gogo init
 
-# 添加依赖并保存到 package.yaml
+# 第二步：添加依赖并保存到 package.yaml
 $ gogo import github.com/leizongmin/leisp
 # 如果要更新可以添加 -u 参数
 $ gogo import -u github.com/leizongmin/leisp
 
+# 第三步：构建
+$ gogo build
+```
+
+使用过程中还可以执行以下命令：
+
+```bash
 # 根据 pakcage.yaml 安装所有依赖
 $ gogo install
-
-# 构建
-$ gogo build
 
 # 执行 go 命令，以下命令相当于 go env
 $ gogo - env
 
-# 清理
+# 删除 vendor 和 _workspace 目录
 $ gogo clean
+# 执行了 gogo clean 后，要继续使用时必须必须先执行 gogo init
 ```
+
 
 ## 工作目录`_workspace`
 
-在执行`gogo init`之后，会创建一个`_workspace`目录，实际上这个目录为`GOPATH`环境变量的值，在配置编辑器的`GOPATH`时可设置为此值。
+在执行`gogo init`之后，会创建一个`_workspace`目录，实际上这个目录为`GOPATH`环境变量的值，在配置编辑器的`GOPATH`时可设置为此`_workspace`目录。
+
 可执行`gogo - env`查看 Go 打印出来的环境变量值。
 
 
