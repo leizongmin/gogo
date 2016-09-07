@@ -19,7 +19,7 @@ func Help(args []string) {
 	case "clean":
 		CleanHelp(args[1:])
 	case "help":
-		fmt.Println("print the help information")
+		fmt.Println("print the help information\n")
 	case "import":
 		ImportHelp(args[1:])
 	case "init":
@@ -31,7 +31,7 @@ func Help(args []string) {
 	case "-":
 		GoHelp(args[1:])
 	default:
-		fmt.Printf("Unknown help topic `%s`.  Run 'gogo help'.", args[0])
+		fmt.Printf("Unknown help topic \"%s\".  Run \"gogo help\".\n", args[0])
 	}
 
 }
@@ -45,7 +45,7 @@ Usage:
 The commands are:
 
     gogo build      compile the current project
-    gogo clean      remove object files from current project directory
+    gogo clean      remove vendor and workspace directory
     gogo help       print the help information
     gogo import     add import packages and save to package.yaml file
                     e.g. gogo import package1 package2 package3
