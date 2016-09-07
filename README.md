@@ -62,7 +62,7 @@ $ gogo clean
 
 ```bash
 # 安装 gogo 工具
-$ go install github.com/leizongmin/gogo
+$ go get -u github.com/leizongmin/gogo
 
 # 下载代码
 $ git clone https://github.com/leizongmin/gogo.git && cd gogo
