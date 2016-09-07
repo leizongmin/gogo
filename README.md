@@ -4,7 +4,7 @@
 ## 安装
 
 ```bash
-$ go install github.com/leizongmin/gogo
+$ go get -u github.com/leizongmin/gogo
 ```
 
 ## 使用
