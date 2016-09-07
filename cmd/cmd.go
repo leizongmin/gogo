@@ -9,7 +9,10 @@ import (
 	"os"
 
 	"github.com/leizongmin/gogo/util"
+	"github.com/mgutz/ansi"
 )
+
+var phosphorize = ansi.ColorFunc("gray+h")
 
 type execFunctionType func(name string, args ...string)
 
@@ -18,7 +21,7 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("package: ", pkg.Package)
+	fmt.Println(phosphorize("package:  " + pkg.Package))
 
 	exec := func(name string, args ...string) {
 		cmd, err := util.NewCommand(name, args...)
@@ -31,8 +34,8 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		}
 		cmd.SetEnv("GOPATH", gopath)
 		cmd.SetDir(pkg.Dir.Pwd)
-		fmt.Println("pwd: ", pkg.Dir.Pwd)
-		fmt.Println("gopath: ", gopath)
+		fmt.Println(phosphorize("pwd:      " + pkg.Dir.Pwd))
+		fmt.Println(phosphorize("gopath:   " + gopath))
 		cmd.Run()
 	}
 

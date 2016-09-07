@@ -1,4 +1,9 @@
 package: github.com/leizongmin/gogo
 version: 0.0.0
+author: ""
+homepage: ""
 import:
 - package: gopkg.in/yaml.v2
+  version: "*"
+- package: github.com/mgutz/ansi
+  version: '*'

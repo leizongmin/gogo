@@ -5,7 +5,11 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/mgutz/ansi"
 )
+
+var phosphorize = ansi.ColorFunc("gray+h")
 
 type Command struct {
 	dir    string
@@ -20,7 +24,7 @@ func NewCommand(path string, args ...string) (*Command, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("exec:", fullPath, strings.Join(args, " "))
+	fmt.Println(phosphorize("exec:     " + fullPath + " " + strings.Join(args, " ")))
 	return &Command{
 		cmd: exec.Command(fullPath, args...),
 		env: os.Environ(),
@@ -46,7 +50,7 @@ func (c *Command) Run() {
 	c.cmd.Stdin = os.Stdin
 	c.cmd.Dir = c.dir
 	if err := c.cmd.Run(); err != nil {
-		fmt.Println("exec:", err)
+		fmt.Println(phosphorize("exec: " + err.Error()))
 	}
 }
 
