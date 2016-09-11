@@ -67,6 +67,9 @@ $ go get -u github.com/leizongmin/gogo
 # 下载代码
 $ git clone https://github.com/leizongmin/gogo.git && cd gogo
 
+# 初始化
+$ gogo init
+
 # 安装依赖模块
 $ gogo install
 
