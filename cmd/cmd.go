@@ -12,16 +12,27 @@ import (
 )
 
 var phosphorize = ansi.ColorFunc("gray+h")
+var debugMode = false
 
 type execFunctionType func(dir string, name string, args ...string)
 type execFunctionWithOutputType func(dir string, name string, args ...string) string
+
+func SetDebug(enable bool) {
+	debugMode = enable
+}
+
+func debugPrintln(line string) {
+	if debugMode {
+		log.Println(phosphorize(line))
+	}
+}
 
 func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) {
 	pkg, err := util.GetPackageInfoFromCurrentDir()
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(phosphorize("package:  " + pkg.Package))
+	debugPrintln("package:  " + pkg.Package)
 
 	exec := func(dir string, name string, args ...string) {
 		cmd, err := util.NewCommand(name, args...)
@@ -34,12 +45,12 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		}
 		cmd.SetEnv("GOPATH", gopath)
 		cmd.SetDir(dir)
-		log.Println(phosphorize("PWD:      " + dir))
-		log.Println(phosphorize("GOPATH:   " + gopath))
+		debugPrintln("PWD:      " + dir)
+		debugPrintln("GOPATH:   " + gopath)
 		if _, err := cmd.RunAndGetOutputs(); err != nil {
 			log.Println(err)
 		} else {
-			log.Println(phosphorize("Success"))
+			debugPrintln("Success")
 		}
 	}
 
@@ -53,12 +64,12 @@ func getExec() execFunctionWithOutputType {
 			log.Fatal(err)
 		}
 		cmd.SetDir(dir)
-		log.Println(phosphorize("PWD:      " + dir))
+		debugPrintln("PWD:      " + dir)
 		ret, err := cmd.RunAndGetOutputs()
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(phosphorize("Success"))
+		debugPrintln("Success")
 		return string(ret)
 	}
 }

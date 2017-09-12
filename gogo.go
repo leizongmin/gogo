@@ -1,14 +1,24 @@
 package main
 
-import "os"
+import (
+	"os"
+	"strings"
 
-import "github.com/leizongmin/gogo/cmd"
+	"github.com/leizongmin/gogo/cmd"
+)
 
 func main() {
 
 	if len(os.Args) < 2 {
 		cmd.Help([]string{})
 		return
+	}
+
+	debug := strings.ToLower(os.Getenv("GOGO_DEBUG"))
+	if debug == "1" || debug == "true" || debug == "yes" {
+		cmd.SetDebug(true)
+	} else {
+		cmd.SetDebug(false)
 	}
 
 	var args = os.Args[2:]

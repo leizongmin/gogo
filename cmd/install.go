@@ -70,7 +70,7 @@ func getLastGitCommit(dir string) string {
 	}
 	exec := getExec()
 	stdout := exec(dir, "git", "log", "-n", "1")
-	log.Println(phosphorize(stdout))
+	debugPrintln(stdout)
 
 	reg := regexp.MustCompile(`[a-z0-9]{40}`)
 	ret := reg.FindAllString(stdout, -1)

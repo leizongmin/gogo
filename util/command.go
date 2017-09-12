@@ -2,7 +2,6 @@ package util
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -13,10 +12,13 @@ import (
 var phosphorize = ansi.ColorFunc("gray+h")
 
 type Command struct {
-	dir    string
-	env    []string
-	status int
-	cmd    *exec.Cmd
+	execPath     string
+	args         []string
+	dir          string
+	env          []string
+	status       int
+	cmd          *exec.Cmd
+	debugPrintln func(string)
 }
 
 func NewCommand(path string, args ...string) (*Command, error) {
@@ -25,10 +27,11 @@ func NewCommand(path string, args ...string) (*Command, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println(phosphorize("exec:     " + fullPath + " " + strings.Join(args, " ")))
 	return &Command{
-		cmd: exec.Command(fullPath, args...),
-		env: os.Environ(),
+		execPath: fullPath,
+		args:     args,
+		cmd:      exec.Command(fullPath, args...),
+		env:      os.Environ(),
 	}, nil
 }
 
@@ -47,7 +50,14 @@ func (c *Command) SetDir(dir string) {
 	c.cmd.Dir = c.dir
 }
 
+func (c *Command) SetDebugPrintln(fn func(string)) {
+	c.debugPrintln = fn
+}
+
 func (c *Command) RunAndGetOutputs() ([]byte, error) {
+	if c.debugPrintln != nil {
+		c.debugPrintln("exec:     " + c.execPath + " " + strings.Join(c.args, " "))
+	}
 	return c.cmd.CombinedOutput()
 }
 
@@ -55,8 +65,13 @@ func (c *Command) Run() {
 	c.cmd.Stdout = os.Stdout
 	c.cmd.Stderr = os.Stderr
 	c.cmd.Stdin = os.Stdin
+	if c.debugPrintln != nil {
+		c.debugPrintln("exec:     " + c.execPath + " " + strings.Join(c.args, " "))
+	}
 	if err := c.cmd.Run(); err != nil {
-		log.Println(phosphorize("exec error: " + err.Error()))
+		if c.debugPrintln != nil {
+			c.debugPrintln("exec error: " + err.Error())
+		}
 	}
 }
 

@@ -11,9 +11,7 @@ func Init(args []string) {
 	pkg, exec := getPackageInfoAndExec(false)
 
 	if isWorkspaceDirExists(pkg.Dir.Pwd) {
-		log.Println(`
-"_workspace" directory already exists, please run "gogo clean" before.
-		`)
+		log.Println(`"_workspace" directory already exists, please run "gogo clean" before.`)
 		return
 	}
 
