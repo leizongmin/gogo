@@ -43,12 +43,13 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		if isVendor {
 			gopath = filepath.Join(pkg.Dir.Workspace, "vendor")
 		}
+		cmd.SetDebugPrintln(debugPrintln)
 		cmd.SetEnv("GOPATH", gopath)
 		cmd.SetDir(dir)
 		debugPrintln("PWD:      " + dir)
 		debugPrintln("GOPATH:   " + gopath)
 		if _, err := cmd.RunAndGetOutputs(); err != nil {
-			log.Println(err)
+			debugPrintln(err.Error())
 		} else {
 			debugPrintln("Success")
 		}

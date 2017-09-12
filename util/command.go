@@ -28,10 +28,11 @@ func NewCommand(path string, args ...string) (*Command, error) {
 		return nil, err
 	}
 	return &Command{
-		execPath: fullPath,
-		args:     args,
-		cmd:      exec.Command(fullPath, args...),
-		env:      os.Environ(),
+		execPath:     fullPath,
+		args:         args,
+		cmd:          exec.Command(fullPath, args...),
+		env:          os.Environ(),
+		debugPrintln: nil,
 	}, nil
 }
 
