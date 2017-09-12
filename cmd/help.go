@@ -57,5 +57,6 @@ The commands are:
                          gogo - vet
 
 Use "gogo help [command]" for more information about a command.
+If you want to get more debug output, set environment "GOGO_DEBUG=1"
 	`)
 }
