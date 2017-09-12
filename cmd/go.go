@@ -13,7 +13,7 @@ func Go(args []string) {
 		return
 	}
 
-	exec("go", args...)
+	exec(pkg.Dir.Pwd, "go", args...)
 
 }
 

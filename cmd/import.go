@@ -21,9 +21,6 @@ func Import(args []string) {
 
 	// `go get ${argv.join(' ')}`
 
-	newArgs := combineStringArray([]string{"get"}, args)
-	exec("go", newArgs...)
-
 	// if not in import list, then save it
 	count := 0
 	packages := make([]string, len(pkg.Import))
@@ -35,6 +32,9 @@ func Import(args []string) {
 			pkg.AddImport(name, "*")
 			count++
 		}
+	}
+	for _, p := range pkg.Import {
+		downloadPackage(pkg, exec, p)
 	}
 
 	if count > 0 {

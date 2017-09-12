@@ -14,7 +14,7 @@ import (
 
 var phosphorize = ansi.ColorFunc("gray+h")
 
-type execFunctionType func(name string, args ...string)
+type execFunctionType func(dir string, name string, args ...string)
 
 func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) {
 	pkg, err := util.GetPackageInfoFromCurrentDir()
@@ -23,7 +23,7 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	}
 	fmt.Println(phosphorize("package:  " + pkg.Package))
 
-	exec := func(name string, args ...string) {
+	exec := func(dir string, name string, args ...string) {
 		cmd, err := util.NewCommand(name, args...)
 		if err != nil {
 			log.Fatal(err)
@@ -33,9 +33,9 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 			gopath = filepath.Join(pkg.Dir.Workspace, "vendor")
 		}
 		cmd.SetEnv("GOPATH", gopath)
-		cmd.SetDir(pkg.Dir.Pwd)
-		fmt.Println(phosphorize("pwd:      " + pkg.Dir.Pwd))
-		fmt.Println(phosphorize("gopath:   " + gopath))
+		cmd.SetDir(dir)
+		fmt.Println(phosphorize("PWD:      " + dir))
+		fmt.Println(phosphorize("GOPATH:   " + gopath))
 		cmd.Run()
 	}
 

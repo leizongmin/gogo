@@ -1,6 +1,8 @@
 package cmd
 
 import "fmt"
+import "github.com/leizongmin/gogo/util"
+import "path/filepath"
 
 func Install(args []string) {
 
@@ -14,12 +16,9 @@ func Install(args []string) {
 	}
 
 	if len(pkg.Package) > 0 {
-		packages := make([]string, len(pkg.Import))
-		for i, v := range pkg.Import {
-			packages[i] = v.Package
+		for _, p := range pkg.Import {
+			downloadPackage(pkg, exec, p)
 		}
-		newArgs := combineStringArray([]string{"get"}, packages)
-		exec("go", newArgs...)
 	}
 
 	fmt.Println("\nOK")
@@ -32,4 +31,14 @@ usage: gogo install
 
 install all import packages according to package.yaml file
 	`)
+}
+
+func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.ImportInfo) {
+	pkgPath := filepath.Join(pkg.Dir.Pwd, "vendor", info.Package)
+	exec(pkg.Dir.Pwd, "rm", "-rf", pkgPath)
+	exec(pkg.Dir.Pwd, "git", "clone", "https://"+info.Package+".git", pkgPath)
+	if info.Package != "*" && info.Package != "" {
+		exec(pkgPath, "git", "checkout", info.Version)
+	}
+	exec(pkg.Dir.Pwd, "rm", "-rf", filepath.Join(pkgPath, ".git"))
 }

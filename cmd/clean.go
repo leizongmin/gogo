@@ -16,9 +16,9 @@ func Clean(args []string) {
 	workspace := pkg.Dir.Workspace
 	pwd := pkg.Dir.Pwd
 
-	exec("rm", "-rf", workspace)
-	exec("rm", "-rf", filepath.Join(pwd, "vendor"))
-	exec("rm", "-rf", filepath.Join(pwd, "bin"))
+	exec(pwd, "rm", "-rf", workspace)
+	exec(pwd, "rm", "-rf", filepath.Join(pwd, "vendor"))
+	exec(pwd, "rm", "-rf", filepath.Join(pwd, "bin"))
 
 	fmt.Println("\nOK")
 
