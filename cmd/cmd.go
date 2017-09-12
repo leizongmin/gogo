@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"path/filepath"
@@ -22,7 +21,7 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(phosphorize("package:  " + pkg.Package))
+	log.Println(phosphorize("package:  " + pkg.Package))
 
 	exec := func(dir string, name string, args ...string) {
 		cmd, err := util.NewCommand(name, args...)
@@ -35,10 +34,13 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		}
 		cmd.SetEnv("GOPATH", gopath)
 		cmd.SetDir(dir)
-		fmt.Println(phosphorize("PWD:      " + dir))
-		fmt.Println(phosphorize("GOPATH:   " + gopath))
-		cmd.Run()
-		fmt.Println(phosphorize("Success"))
+		log.Println(phosphorize("PWD:      " + dir))
+		log.Println(phosphorize("GOPATH:   " + gopath))
+		if _, err := cmd.RunAndGetOutputs(); err != nil {
+			log.Println(phosphorize("Success"))
+		} else {
+			log.Println(err)
+		}
 	}
 
 	return pkg, exec
@@ -51,12 +53,12 @@ func getExec() execFunctionWithOutputType {
 			log.Fatal(err)
 		}
 		cmd.SetDir(dir)
-		fmt.Println(phosphorize("PWD:      " + dir))
+		log.Println(phosphorize("PWD:      " + dir))
 		ret, err := cmd.RunAndGetOutputs()
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(phosphorize("Success"))
+		log.Println(phosphorize("Success"))
 		return string(ret)
 	}
 }

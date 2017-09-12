@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 )
 
@@ -10,7 +11,7 @@ func Init(args []string) {
 	pkg, exec := getPackageInfoAndExec(false)
 
 	if isWorkspaceDirExists(pkg.Dir.Pwd) {
-		fmt.Println(`
+		log.Println(`
 "_workspace" directory already exists, please run "gogo clean" before.
 		`)
 		return
@@ -37,7 +38,7 @@ func Init(args []string) {
 	exec(pwd, "mkdir", "-p", filepath.Join(workspace, "vendor", "pkg"))
 	exec(pwd, "ln", "-s", filepath.Join(workspace, "vendor", "pkg"), filepath.Join(workspace, "pkg"))
 
-	fmt.Println("\nOK")
+	log.Println("\nOK")
 
 }
 

@@ -13,7 +13,7 @@ func Import(args []string) {
 	pkg, exec := getPackageInfoAndExec(true)
 
 	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		fmt.Println(`
+		log.Println(`
 "_workspace" directory doesn't exists, please run "gogo init" before.
 		`)
 		return
@@ -44,7 +44,7 @@ func Import(args []string) {
 		}
 	}
 
-	fmt.Println("\nOK")
+	log.Println("\nOK")
 
 }
 

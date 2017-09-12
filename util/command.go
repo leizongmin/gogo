@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -24,7 +25,7 @@ func NewCommand(path string, args ...string) (*Command, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(phosphorize("exec:     " + fullPath + " " + strings.Join(args, " ")))
+	log.Println(phosphorize("exec:     " + fullPath + " " + strings.Join(args, " ")))
 	return &Command{
 		cmd: exec.Command(fullPath, args...),
 		env: os.Environ(),
@@ -55,7 +56,7 @@ func (c *Command) Run() {
 	c.cmd.Stderr = os.Stderr
 	c.cmd.Stdin = os.Stdin
 	if err := c.cmd.Run(); err != nil {
-		fmt.Println(phosphorize("exec error: " + err.Error()))
+		log.Println(phosphorize("exec error: " + err.Error()))
 	}
 }
 

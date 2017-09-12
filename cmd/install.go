@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"path/filepath"
 	"regexp"
@@ -14,7 +13,7 @@ func Install(args []string) {
 	pkg, exec := getPackageInfoAndExec(true)
 
 	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		fmt.Println(`
+		log.Println(`
 "_workspace" directory doesn't exists, please run "gogo init" before.
 		`)
 		return
@@ -26,12 +25,12 @@ func Install(args []string) {
 		}
 	}
 
-	fmt.Println("\nOK")
+	log.Println("OK")
 
 }
 
 func InstallHelp(args []string) {
-	fmt.Println(`
+	log.Println(`
 usage: gogo install
 
 install all import packages according to package.yaml file
@@ -40,6 +39,7 @@ install all import packages according to package.yaml file
 
 func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.ImportInfo) {
 	pkgPath := filepath.Join(pkg.Dir.Pwd, "vendor", info.Package)
+	log.Printf("Downloading package %s\n", info.Package)
 	if isGitRepository(pkgPath) {
 		exec(pkgPath, "git", "reset", "--hard", "HEAD")
 		exec(pkgPath, "git", "pull")
@@ -51,7 +51,7 @@ func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.Im
 		exec(pkgPath, "git", "checkout", info.Version)
 	}
 	info.Version = getLastGitCommit(pkgPath)
-	fmt.Printf("Package %s at %s\n", info.Package, info.Version)
+	log.Printf("Package %s at %s\n", info.Package, info.Version)
 }
 
 func isGitRepository(dir string) bool {
@@ -70,7 +70,7 @@ func getLastGitCommit(dir string) string {
 	}
 	exec := getExec()
 	stdout := exec(dir, "git", "log", "-n", "1")
-	fmt.Println(phosphorize(stdout))
+	log.Println(phosphorize(stdout))
 
 	reg := regexp.MustCompile(`[a-z0-9]{40}`)
 	ret := reg.FindAllString(stdout, -1)

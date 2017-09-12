@@ -3,11 +3,11 @@ version: 0.0.0
 author: ""
 homepage: ""
 import:
-- package: gopkg.in/yaml.v2
-  version: 'e72f935'
 - package: github.com/Masterminds/vcs
-  version: '*'
+  version: 6f1c6d150500e452704e9863f68c2559f58616bf
 - package: github.com/codegangsta/cli
-  version: '*'
+  version: 7fb9c86b14e6a702a4157ccb5a863f07d844a207
 - package: github.com/Masterminds/semver
-  version: '*'
+  version: 517734cc7d6470c0d07130e40fd40bdeb9bcd3fd
+- package: gopkg.in/yaml.v2
+  version: e72f93569ef83aca933836c2fb9185faeeced236
