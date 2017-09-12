@@ -43,6 +43,10 @@ func (c *Command) SetDir(dir string) {
 	c.dir = dir
 }
 
+func (c *Command) RunAndGetOutputs() ([]byte, error) {
+	return c.cmd.CombinedOutput()
+}
+
 func (c *Command) Run() {
 	c.cmd.Env = c.env
 	c.cmd.Stdout = os.Stdout

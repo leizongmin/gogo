@@ -1,8 +1,13 @@
 package cmd
 
-import "fmt"
-import "github.com/leizongmin/gogo/util"
-import "path/filepath"
+import (
+	"fmt"
+	"log"
+	"path/filepath"
+	"regexp"
+
+	"github.com/leizongmin/gogo/util"
+)
 
 func Install(args []string) {
 
@@ -35,10 +40,48 @@ install all import packages according to package.yaml file
 
 func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.ImportInfo) {
 	pkgPath := filepath.Join(pkg.Dir.Pwd, "vendor", info.Package)
-	exec(pkg.Dir.Pwd, "rm", "-rf", pkgPath)
-	exec(pkg.Dir.Pwd, "git", "clone", "https://"+info.Package+".git", pkgPath)
+	if isGitRepository(pkgPath) {
+		exec(pkgPath, "git", "reset", "--hard", "HEAD")
+		exec(pkgPath, "git", "pull")
+	} else {
+		exec(pkg.Dir.Pwd, "rm", "-rf", pkgPath)
+		exec(pkg.Dir.Pwd, "git", "clone", "https://"+info.Package+".git", pkgPath)
+	}
 	if info.Package != "*" && info.Package != "" {
 		exec(pkgPath, "git", "checkout", info.Version)
 	}
-	exec(pkg.Dir.Pwd, "rm", "-rf", filepath.Join(pkgPath, ".git"))
+	info.Version = getLastGitCommit(pkgPath)
+}
+
+func isGitRepository(dir string) bool {
+	if !checkPathExists(dir) {
+		return false
+	}
+	if !checkPathExists(filepath.Join(dir, ".git")) {
+		return false
+	}
+	commit := getLastGitCommit(dir)
+	if commit == "" {
+		return false
+	}
+	return true
+}
+
+func getLastGitCommit(dir string) string {
+	exec := getExec()
+	stdout := exec(dir, "git", "log", "-n", "1")
+	reg := regexp.MustCompile(`[a-z0-9]{40}`)
+	ret := reg.FindAllString(stdout, -1)
+	if len(ret) > 0 {
+		return ret[0]
+	}
+	return ""
+}
+
+func checkPathExists(path string) bool {
+	ret, err := exists(path)
+	if err != nil {
+		log.Println(err)
+	}
+	return ret
 }

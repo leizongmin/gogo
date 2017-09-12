@@ -15,6 +15,7 @@ import (
 var phosphorize = ansi.ColorFunc("gray+h")
 
 type execFunctionType func(dir string, name string, args ...string)
+type execFunctionWithOutputType func(dir string, name string, args ...string) string
 
 func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) {
 	pkg, err := util.GetPackageInfoFromCurrentDir()
@@ -40,6 +41,22 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	}
 
 	return pkg, exec
+}
+
+func getExec() execFunctionWithOutputType {
+	return func(dir string, name string, args ...string) string {
+		cmd, err := util.NewCommand(name, args...)
+		if err != nil {
+			log.Fatal(err)
+		}
+		cmd.SetDir(dir)
+		fmt.Println(phosphorize("PWD:      " + dir))
+		ret, err := cmd.RunAndGetOutputs()
+		if err != nil {
+			log.Fatal(err)
+		}
+		return string(ret)
+	}
 }
 
 func combineStringArray(a []string, b []string) []string {
