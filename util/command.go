@@ -54,7 +54,7 @@ func (c *Command) Run() {
 	c.cmd.Stdin = os.Stdin
 	c.cmd.Dir = c.dir
 	if err := c.cmd.Run(); err != nil {
-		fmt.Println(phosphorize("exec: " + err.Error()))
+		fmt.Println(phosphorize("exec error: " + err.Error()))
 	}
 }
 
