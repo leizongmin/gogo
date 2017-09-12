@@ -51,6 +51,7 @@ func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.Im
 		exec(pkgPath, "git", "checkout", info.Version)
 	}
 	info.Version = getLastGitCommit(pkgPath)
+	fmt.Printf("Package %s at %s", info.Package, info.Version)
 }
 
 func isGitRepository(dir string) bool {
