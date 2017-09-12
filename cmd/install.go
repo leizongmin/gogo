@@ -60,16 +60,17 @@ func isGitRepository(dir string) bool {
 	if !checkPathExists(filepath.Join(dir, ".git")) {
 		return false
 	}
-	commit := getLastGitCommit(dir)
-	if commit == "" {
-		return false
-	}
 	return true
 }
 
 func getLastGitCommit(dir string) string {
+	if !isGitRepository(dir) {
+		return ""
+	}
 	exec := getExec()
 	stdout := exec(dir, "git", "log", "-n", "1")
+	fmt.Println(phosphorize(stdout))
+
 	reg := regexp.MustCompile(`[a-z0-9]{40}`)
 	ret := reg.FindAllString(stdout, -1)
 	if len(ret) > 0 {
