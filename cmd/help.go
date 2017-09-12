@@ -19,7 +19,7 @@ func Help(args []string) {
 	case "clean":
 		CleanHelp(args[1:])
 	case "help":
-		fmt.Println("print the help information\n")
+		fmt.Printf("print the help information\n\n")
 	case "import":
 		ImportHelp(args[1:])
 	case "init":

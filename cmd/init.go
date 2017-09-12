@@ -38,7 +38,7 @@ func Init(args []string) {
 	exec(pwd, "mkdir", "-p", filepath.Join(workspace, "vendor", "pkg"))
 	exec(pwd, "ln", "-s", filepath.Join(workspace, "vendor", "pkg"), filepath.Join(workspace, "pkg"))
 
-	log.Println("\nOK")
+	log.Println("OK")
 
 }
 

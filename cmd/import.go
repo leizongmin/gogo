@@ -44,7 +44,7 @@ func Import(args []string) {
 		}
 	}
 
-	log.Println("\nOK")
+	log.Println("OK")
 
 }
 

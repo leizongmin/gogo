@@ -37,9 +37,9 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		log.Println(phosphorize("PWD:      " + dir))
 		log.Println(phosphorize("GOPATH:   " + gopath))
 		if _, err := cmd.RunAndGetOutputs(); err != nil {
-			log.Println(phosphorize("Success"))
-		} else {
 			log.Println(err)
+		} else {
+			log.Println(phosphorize("Success"))
 		}
 	}
 

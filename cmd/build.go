@@ -20,7 +20,7 @@ func Build(args []string) {
 
 	exec(pkg.Dir.Pwd, "go", "build", "-o", out, pkg.Package)
 
-	fmt.Println("\nOK")
+	fmt.Println("OK")
 
 }
 

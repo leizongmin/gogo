@@ -20,7 +20,7 @@ func Clean(args []string) {
 	exec(pwd, "rm", "-rf", filepath.Join(pwd, "vendor"))
 	exec(pwd, "rm", "-rf", filepath.Join(pwd, "bin"))
 
-	fmt.Println("\nOK")
+	fmt.Println("OK")
 
 }
 
