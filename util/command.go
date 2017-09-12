@@ -33,14 +33,17 @@ func NewCommand(path string, args ...string) (*Command, error) {
 
 func (c *Command) SetEnv(name string, value string) {
 	c.env = append(filterEnv(c.env, name), fmt.Sprintf("%s=%s", name, value))
+	c.cmd.Env = c.env
 }
 
 func (c *Command) SetEnvLine(line string) {
 	c.env = append(c.env, line)
+	c.cmd.Env = c.env
 }
 
 func (c *Command) SetDir(dir string) {
 	c.dir = dir
+	c.cmd.Dir = c.dir
 }
 
 func (c *Command) RunAndGetOutputs() ([]byte, error) {
@@ -48,11 +51,9 @@ func (c *Command) RunAndGetOutputs() ([]byte, error) {
 }
 
 func (c *Command) Run() {
-	c.cmd.Env = c.env
 	c.cmd.Stdout = os.Stdout
 	c.cmd.Stderr = os.Stderr
 	c.cmd.Stdin = os.Stdin
-	c.cmd.Dir = c.dir
 	if err := c.cmd.Run(); err != nil {
 		fmt.Println(phosphorize("exec error: " + err.Error()))
 	}
