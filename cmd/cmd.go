@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"log"
-
-	"path/filepath"
-
 	"os"
+	"path/filepath"
 
 	"github.com/leizongmin/gogo/util"
 	"github.com/mgutz/ansi"
@@ -17,16 +15,19 @@ var debugMode = false
 type execFunctionType func(dir string, name string, args ...string)
 type execFunctionWithOutputType func(dir string, name string, args ...string) string
 
+// SetDebug 设置调试输出模式
 func SetDebug(enable bool) {
 	debugMode = enable
 }
 
+// 调试输出
 func debugPrintln(line string) {
 	if debugMode {
 		log.Println(phosphorize(line))
 	}
 }
 
+// 获取包信息及 exec 函数
 func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) {
 	pkg, err := util.GetPackageInfoFromCurrentDir()
 	if err != nil {
@@ -58,6 +59,7 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 	return pkg, exec
 }
 
+// 获取 exec 函数
 func getExec() execFunctionWithOutputType {
 	return func(dir string, name string, args ...string) string {
 		cmd, err := util.NewCommand(name, args...)
@@ -75,6 +77,7 @@ func getExec() execFunctionWithOutputType {
 	}
 }
 
+// 合并字符串数组
 func combineStringArray(a []string, b []string) []string {
 	ret := make([]string, len(a)+len(b))
 	copy(ret, a)
@@ -82,6 +85,7 @@ func combineStringArray(a []string, b []string) []string {
 	return ret
 }
 
+// 在字符串数组中查找字符串
 func findInStringArray(arr []string, str string) int {
 	for i, v := range arr {
 		if v == str {
@@ -91,7 +95,7 @@ func findInStringArray(arr []string, str string) int {
 	return -1
 }
 
-// exists returns whether the given file or directory exists or not
+// 检查文件或目录是否存在
 func exists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -103,6 +107,7 @@ func exists(path string) (bool, error) {
 	return true, err
 }
 
+// 判断 _workspace 目录是否存在
 func isWorkspaceDirExists(dir string) bool {
 	ret, err := exists(filepath.Join(dir, "_workspace"))
 	if err != nil {

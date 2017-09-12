@@ -4,12 +4,12 @@ import (
 	"fmt"
 )
 
+// Help 打印帮助信息
 func Help(args []string) {
-
 	Version(args)
 
 	if len(args) < 1 {
-		printHelpIndex()
+		printUsage()
 		return
 	}
 
@@ -33,10 +33,10 @@ func Help(args []string) {
 	default:
 		fmt.Printf("Unknown help topic \"%s\".  Run \"gogo help\".\n", args[0])
 	}
-
 }
 
-func printHelpIndex() {
+// 打印使用手册
+func printUsage() {
 	fmt.Printf(`
 Usage:
 

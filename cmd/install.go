@@ -8,6 +8,7 @@ import (
 	"github.com/leizongmin/gogo/util"
 )
 
+// Install 安装依赖模块
 func Install(args []string) {
 
 	pkg, exec := getPackageInfoAndExec(true)
@@ -29,6 +30,7 @@ func Install(args []string) {
 
 }
 
+// InstallHelp 命令帮助
 func InstallHelp(args []string) {
 	log.Println(`
 usage: gogo install
@@ -37,6 +39,7 @@ install all import packages according to package.yaml file
 	`)
 }
 
+// 下载模块
 func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.ImportInfo) {
 	pkgPath := filepath.Join(pkg.Dir.Pwd, "vendor", info.Package)
 	log.Printf("Downloading package %s\n", info.Package)
@@ -50,10 +53,11 @@ func downloadPackage(pkg *util.PackageInfo, exec execFunctionType, info *util.Im
 	if info.Package != "*" && info.Package != "" {
 		exec(pkgPath, "git", "checkout", info.Version)
 	}
-	info.Version = getLastGitCommit(pkgPath)
+	info.Version = getLastGitCommitHash(pkgPath)
 	log.Printf("Package %s at %s\n", info.Package, info.Version)
 }
 
+// 判断目录是否为 Git 仓库
 func isGitRepository(dir string) bool {
 	if !checkPathExists(dir) {
 		return false
@@ -64,7 +68,8 @@ func isGitRepository(dir string) bool {
 	return true
 }
 
-func getLastGitCommit(dir string) string {
+// 获取当前 Git 仓库最后一次提交的 hash
+func getLastGitCommitHash(dir string) string {
 	if !isGitRepository(dir) {
 		return ""
 	}
@@ -80,6 +85,7 @@ func getLastGitCommit(dir string) string {
 	return ""
 }
 
+// 检查文件路径是否存在
 func checkPathExists(path string) bool {
 	ret, err := exists(path)
 	if err != nil {

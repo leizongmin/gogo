@@ -8,10 +8,9 @@ import (
 	"github.com/leizongmin/gogo/util"
 )
 
+// Import 添加模块依赖
 func Import(args []string) {
-
 	pkg, exec := getPackageInfoAndExec(true)
-
 	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
 		log.Println(`
 "_workspace" directory doesn't exists, please run "gogo init" before.
@@ -19,9 +18,6 @@ func Import(args []string) {
 		return
 	}
 
-	// `go get ${argv.join(' ')}`
-
-	// if not in import list, then save it
 	count := 0
 	packages := make([]string, len(pkg.Import))
 	for i, p := range pkg.Import {
@@ -45,9 +41,9 @@ func Import(args []string) {
 	}
 
 	log.Println("OK")
-
 }
 
+// ImportHelp 命令帮助
 func ImportHelp(args []string) {
 	fmt.Println(`
 usage: gogo import package1 package2 package3
