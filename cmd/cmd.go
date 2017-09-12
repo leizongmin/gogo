@@ -38,6 +38,7 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) 
 		fmt.Println(phosphorize("PWD:      " + dir))
 		fmt.Println(phosphorize("GOPATH:   " + gopath))
 		cmd.Run()
+		fmt.Println(phosphorize("Success"))
 	}
 
 	return pkg, exec
@@ -55,6 +56,7 @@ func getExec() execFunctionWithOutputType {
 		if err != nil {
 			log.Fatal(err)
 		}
+		fmt.Println(phosphorize("Success"))
 		return string(ret)
 	}
 }
