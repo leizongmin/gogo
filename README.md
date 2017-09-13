@@ -29,8 +29,6 @@ $ gogo init
 
 # 第二步：添加依赖并保存到 package.yaml
 $ gogo import github.com/leizongmin/leisp
-# 如果要更新可以添加 -u 参数
-$ gogo import -u github.com/leizongmin/leisp
 
 # 第三步：构建
 $ gogo build
@@ -49,7 +47,6 @@ $ gogo - env
 $ gogo clean
 # 执行了 gogo clean 后，要继续使用时必须必须先执行 gogo init
 ```
-
 
 ## 工作目录`_workspace`
 
