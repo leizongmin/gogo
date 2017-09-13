@@ -15,16 +15,17 @@ func Init(args []string) {
 	}
 	workspace := pkg.Dir.Workspace
 	pwd := pkg.Dir.Pwd
+	exec.setDir(pwd)
 
-	exec(pwd, "mkdir", "-p", filepath.Join(workspace, "src", filepath.Dir(pkg.Package)))
-	exec(pwd, "ln", "-s", pwd, filepath.Join(workspace, "src", pkg.Package))
+	exec.run("mkdir", "-p", filepath.Join(workspace, "src", filepath.Dir(pkg.Package)))
+	exec.run("ln", "-s", pwd, filepath.Join(workspace, "src", pkg.Package))
 
-	exec(pwd, "mkdir", "-p", filepath.Join(pwd, "vendor"))
-	exec(pwd, "mkdir", "-p", filepath.Join(workspace, "vendor"))
-	exec(pwd, "ln", "-s", filepath.Join(pwd, "vendor"), filepath.Join(workspace, "vendor", "src"))
+	exec.run("mkdir", "-p", filepath.Join(pwd, "vendor"))
+	exec.run("mkdir", "-p", filepath.Join(workspace, "vendor"))
+	exec.run("ln", "-s", filepath.Join(pwd, "vendor"), filepath.Join(workspace, "vendor", "src"))
 
-	exec(pwd, "mkdir", "-p", filepath.Join(workspace, "vendor", "pkg"))
-	exec(pwd, "ln", "-s", filepath.Join(workspace, "vendor", "pkg"), filepath.Join(workspace, "pkg"))
+	exec.run("mkdir", "-p", filepath.Join(workspace, "vendor", "pkg"))
+	exec.run("ln", "-s", filepath.Join(workspace, "vendor", "pkg"), filepath.Join(workspace, "pkg"))
 
 	log.Println("OK")
 }

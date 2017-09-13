@@ -24,15 +24,15 @@ type Command struct {
 
 // NewCommand 创建新命令
 func NewCommand(path string, args ...string) (*Command, error) {
-	var fullPath = ""
-	fullPath, err := exec.LookPath(path)
+	var execPath = ""
+	execPath, err := exec.LookPath(path)
 	if err != nil {
 		return nil, err
 	}
 	return &Command{
-		execPath:     fullPath,
+		execPath:     execPath,
 		args:         args,
-		cmd:          exec.Command(fullPath, args...),
+		cmd:          exec.Command(execPath, args...),
 		env:          os.Environ(),
 		debugPrintln: nil,
 	}, nil

@@ -11,7 +11,8 @@ func Go(args []string) {
 		`)
 		return
 	}
-	exec(pkg.Dir.Pwd, "go", args...)
+	exec.setDir(pkg.Dir.Pwd)
+	exec.run("go", args...)
 }
 
 // GoHelp 命令帮助

@@ -12,9 +12,6 @@ import (
 var phosphorize = ansi.ColorFunc("gray+h")
 var debugMode = false
 
-type execFunctionType func(dir string, name string, args ...string)
-type execFunctionWithOutputType func(dir string, name string, args ...string) string
-
 // SetDebug 设置调试输出模式
 func SetDebug(enable bool) {
 	debugMode = enable
@@ -27,54 +24,66 @@ func debugPrintln(line string) {
 	}
 }
 
+type execObject struct {
+	dir string
+	env map[string]string
+}
+
+func createExec() *execObject {
+	return &execObject{
+		dir: ".",
+		env: make(map[string]string),
+	}
+}
+
+func (e *execObject) setDir(dir string) {
+	e.dir = dir
+}
+
+func (e *execObject) setEnv(name string, value string) {
+	e.env[name] = value
+}
+
+func (e *execObject) getCmd(bin string, args ...string) *util.Command {
+	cmd, err := util.NewCommand(bin, args...)
+	if err != nil {
+		log.Fatal(err)
+	}
+	cmd.SetDebugPrintln(debugPrintln)
+	cmd.SetDir(e.dir)
+	for k, v := range e.env {
+		cmd.SetEnv(k, v)
+	}
+	return cmd
+}
+
+func (e *execObject) run(bin string, args ...string) string {
+	cmd := e.getCmd(bin, args...)
+	ret, err := cmd.RunAndGetOutputs()
+	if err != nil {
+		debugPrintln(err.Error())
+	} else {
+		debugPrintln("Success")
+	}
+	return string(ret)
+}
+
 // 获取包信息及 exec 函数
-func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, execFunctionType) {
+func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, *execObject) {
 	pkg, err := util.GetPackageInfoFromCurrentDir()
 	if err != nil {
 		log.Fatal(err)
 	}
 	debugPrintln("package:  " + pkg.Package)
 
-	exec := func(dir string, name string, args ...string) {
-		cmd, err := util.NewCommand(name, args...)
-		if err != nil {
-			log.Fatal(err)
-		}
-		gopath := pkg.Dir.Workspace
-		if isVendor {
-			gopath = filepath.Join(pkg.Dir.Workspace, "vendor")
-		}
-		cmd.SetDebugPrintln(debugPrintln)
-		cmd.SetEnv("GOPATH", gopath)
-		cmd.SetDir(dir)
-		debugPrintln("PWD:      " + dir)
-		debugPrintln("GOPATH:   " + gopath)
-		if _, err := cmd.RunAndGetOutputs(); err != nil {
-			debugPrintln(err.Error())
-		} else {
-			debugPrintln("Success")
-		}
+	gopath := pkg.Dir.Workspace
+	if isVendor {
+		gopath = filepath.Join(pkg.Dir.Workspace, "vendor")
 	}
+	exec := createExec()
+	exec.setEnv("GOPATH", gopath)
 
 	return pkg, exec
-}
-
-// 获取 exec 函数
-func getExec() execFunctionWithOutputType {
-	return func(dir string, name string, args ...string) string {
-		cmd, err := util.NewCommand(name, args...)
-		if err != nil {
-			log.Fatal(err)
-		}
-		cmd.SetDir(dir)
-		debugPrintln("PWD:      " + dir)
-		ret, err := cmd.RunAndGetOutputs()
-		if err != nil {
-			log.Fatal(err)
-		}
-		debugPrintln("Success")
-		return string(ret)
-	}
 }
 
 // 合并字符串数组
