@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var version = "0.0.1"
+var version = "0.0.2"
 
 // Version 打印版本号
 func Version(args []string) {
