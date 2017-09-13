@@ -11,6 +11,7 @@ import (
 
 var phosphorize = ansi.ColorFunc("gray+h")
 
+// Command 命令结构体
 type Command struct {
 	execPath     string
 	args         []string
@@ -21,6 +22,7 @@ type Command struct {
 	debugPrintln func(string)
 }
 
+// NewCommand 创建新命令
 func NewCommand(path string, args ...string) (*Command, error) {
 	var fullPath = ""
 	fullPath, err := exec.LookPath(path)
@@ -36,25 +38,30 @@ func NewCommand(path string, args ...string) (*Command, error) {
 	}, nil
 }
 
+// SetEnv 设置环境变量
 func (c *Command) SetEnv(name string, value string) {
 	c.env = append(filterEnv(c.env, name), fmt.Sprintf("%s=%s", name, value))
 	c.cmd.Env = c.env
 }
 
+// SetEnvLine 设置环境变量
 func (c *Command) SetEnvLine(line string) {
 	c.env = append(c.env, line)
 	c.cmd.Env = c.env
 }
 
+// SetDir 设置工作目录
 func (c *Command) SetDir(dir string) {
 	c.dir = dir
 	c.cmd.Dir = c.dir
 }
 
+// SetDebugPrintln 设置调试输出函数
 func (c *Command) SetDebugPrintln(fn func(string)) {
 	c.debugPrintln = fn
 }
 
+// RunAndGetOutputs 运行命令，并返回执行完毕后输出的内容
 func (c *Command) RunAndGetOutputs() ([]byte, error) {
 	if c.debugPrintln != nil {
 		c.debugPrintln("exec:     " + c.execPath + " " + strings.Join(c.args, " "))
@@ -62,6 +69,7 @@ func (c *Command) RunAndGetOutputs() ([]byte, error) {
 	return c.cmd.CombinedOutput()
 }
 
+// Run 运行命令
 func (c *Command) Run() {
 	c.cmd.Stdout = os.Stdout
 	c.cmd.Stderr = os.Stderr
