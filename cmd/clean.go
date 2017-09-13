@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 )
 
@@ -14,7 +15,7 @@ func Clean(args []string) {
 	exec.run("rm", "-rf", workspace)
 	exec.run("rm", "-rf", filepath.Join(pwd, "vendor"))
 	exec.run("rm", "-rf", filepath.Join(pwd, "bin"))
-	fmt.Println("OK")
+	log.Println("OK")
 }
 
 // CleanHelp 命令帮助

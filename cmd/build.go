@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 )
 
@@ -18,7 +19,7 @@ func Build(args []string) {
 	exec.setDir(pkg.Dir.Pwd)
 	ret := exec.run("go", "build", "-o", out, pkg.Package)
 	fmt.Print(ret)
-	fmt.Println("OK")
+	log.Println("OK")
 }
 
 // BuildHelp 命令帮助
