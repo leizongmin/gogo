@@ -12,7 +12,7 @@ func Run(args []string) {
 		log.Println(`"_workspace" directory doesn't exists, please run "gogo init" before.`)
 		return
 	}
-	exec.setDir(pkg.Dir.Pwd)
+	exec.setDir(pkg.Dir.PwdUnderWorkspace)
 	if len(args) >= 1 {
 		ret := exec.run(args[0], args[1:]...)
 		fmt.Print(ret)

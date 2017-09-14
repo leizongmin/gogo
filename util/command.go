@@ -61,11 +61,17 @@ func (c *Command) SetDebugPrintln(fn func(string)) {
 	c.debugPrintln = fn
 }
 
-// RunAndGetOutputs 运行命令，并返回执行完毕后输出的内容
-func (c *Command) RunAndGetOutputs() ([]byte, error) {
+func (c *Command) printInfo() {
 	if c.debugPrintln != nil {
+		c.debugPrintln("pwd:      " + c.dir)
+		c.debugPrintln("env:\n" + strings.Join(c.env, "\n"))
 		c.debugPrintln("exec:     " + c.execPath + " " + strings.Join(c.args, " "))
 	}
+}
+
+// RunAndGetOutputs 运行命令，并返回执行完毕后输出的内容
+func (c *Command) RunAndGetOutputs() ([]byte, error) {
+	c.printInfo()
 	return c.cmd.CombinedOutput()
 }
 
@@ -74,9 +80,7 @@ func (c *Command) Run() {
 	c.cmd.Stdout = os.Stdout
 	c.cmd.Stderr = os.Stderr
 	c.cmd.Stdin = os.Stdin
-	if c.debugPrintln != nil {
-		c.debugPrintln("exec:     " + c.execPath + " " + strings.Join(c.args, " "))
-	}
+	c.printInfo()
 	if err := c.cmd.Run(); err != nil {
 		if c.debugPrintln != nil {
 			c.debugPrintln("exec error: " + err.Error())

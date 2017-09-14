@@ -11,7 +11,7 @@ func Go(args []string) {
 		`)
 		return
 	}
-	exec.setDir(pkg.Dir.Pwd)
+	exec.setDir(pkg.Dir.PwdUnderWorkspace)
 	ret := exec.run("go", args...)
 	fmt.Print(ret)
 }
