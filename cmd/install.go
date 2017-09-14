@@ -39,7 +39,7 @@ func Install(args []string) {
 // InstallHelp 命令帮助
 func InstallHelp(args []string) {
 	log.Println(`
-usage: gogo install
+Usage: gogo install
 
 install all import packages according to package.yaml file
 	`)

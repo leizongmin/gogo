@@ -24,7 +24,7 @@ func Run(args []string) {
 // RunHelp 命令帮助
 func RunHelp(args []string) {
 	fmt.Println(`
-usage: gogo run dep init
+Usage: gogo run dep init
        gogo run env
 
 run any command.

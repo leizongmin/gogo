@@ -21,7 +21,7 @@ func Clean(args []string) {
 // CleanHelp 命令帮助
 func CleanHelp(args []string) {
 	fmt.Println(`
-usage: gogo clean
+Usage: gogo clean
 
 remove object files from current project directory.
 	`)

@@ -19,7 +19,7 @@ func Go(args []string) {
 // GoHelp 命令帮助
 func GoHelp(args []string) {
 	fmt.Println(`
-usage: gogo - env
+Usage: gogo - env
        gogo - vet
        gogo - get package1 package2
 

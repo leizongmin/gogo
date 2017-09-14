@@ -14,7 +14,7 @@ func Version(args []string) {
 // VersionHelp 命令帮助
 func VersionHelp(args []string) {
 	fmt.Println(`
-usage: gogo version
+Usage: gogo version
 
 print gogo version information.
 	`)

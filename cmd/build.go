@@ -23,7 +23,7 @@ func Build(args []string) {
 // BuildHelp 命令帮助
 func BuildHelp(args []string) {
 	fmt.Println(`
-usage: gogo build
+Usage: gogo build
 
 compile the current project.
 	`)
