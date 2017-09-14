@@ -45,6 +45,7 @@ Usage:
 The commands are:
 
     gogo build      compile the current project
+    gogo dev        compile the current project and run
     gogo clean      remove vendor and workspace directory
     gogo help       print the help information
     gogo import     add import packages and save to package.yaml file
@@ -54,9 +55,9 @@ The commands are:
     gogo version    print gogo version information
     gogo - <cmd>    run any go command
                     e.g. gogo - env
-						 gogo - vet
-	gogo run <cmd>  run any command
-					e.g. gogo run env
+                         gogo - vet
+    gogo run <cmd>  run any command
+                    e.g. gogo run env
                          gogo run go env
 
 Use "gogo help [command]" for more information about a command.

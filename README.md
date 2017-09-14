@@ -32,6 +32,11 @@ $ gogo import github.com/leizongmin/leisp
 
 # 第三步：构建
 $ gogo build
+
+# 开发时可以使用以下命令构建并直接执行
+$ gogo dev
+# 如果有参数可以直接在后面添加
+$ gogo dev arg1 arg2
 ```
 
 使用过程中还可以执行以下命令：
