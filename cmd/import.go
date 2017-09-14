@@ -32,12 +32,23 @@ func Import(args []string) {
 	for _, p := range pkg.Import {
 		downloadPackage(pkg, exec, p)
 	}
-
-	if count > 0 {
-		fmt.Printf("save %d new import(s) to package.yaml file\n", count)
+	for {
+		log.Println("Find implicit dependences...")
+		c := downloadAllImplicitDependences(pkg, exec)
+		count += c
 		if err := util.SavePackageInfoToCurrentDir(pkg); err != nil {
 			log.Fatal(err)
 		}
+		if c < 1 {
+			break
+		}
+	}
+
+	if count > 0 {
+		fmt.Printf("Save %d new import(s) to package.yaml file\n", count)
+	}
+	if err := util.SavePackageInfoToCurrentDir(pkg); err != nil {
+		log.Fatal(err)
 	}
 
 	log.Println("OK")

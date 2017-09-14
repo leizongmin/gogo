@@ -4,6 +4,7 @@ import (
 	"log"
 	"path/filepath"
 	"regexp"
+	"strings"
 
 	"github.com/leizongmin/gogo/util"
 )
@@ -17,9 +18,19 @@ func Install(args []string) {
 		`)
 		return
 	}
-	if len(pkg.Package) > 0 {
+	if len(pkg.Import) > 0 {
 		for _, p := range pkg.Import {
 			downloadPackage(pkg, exec, p)
+		}
+	}
+	for {
+		log.Println("Find implicit dependences...")
+		c := downloadAllImplicitDependences(pkg, exec)
+		if err := util.SavePackageInfoToCurrentDir(pkg); err != nil {
+			log.Fatal(err)
+		}
+		if c < 1 {
+			break
 		}
 	}
 	log.Println("OK")
@@ -37,7 +48,7 @@ install all import packages according to package.yaml file
 // 下载模块
 func downloadPackage(pkg *util.PackageInfo, exec *execObject, info *util.ImportInfo) {
 	pkgPath := filepath.Join(pkg.Dir.Pwd, "vendor", info.Package)
-	log.Printf("Downloading package %s\n", info.Package)
+	log.Printf("Download package %s\n", info.Package)
 	if isGitRepository(pkgPath) {
 		exec.setDir(pkgPath)
 		exec.run("git", "reset", "--hard", "HEAD")
@@ -51,8 +62,26 @@ func downloadPackage(pkg *util.PackageInfo, exec *execObject, info *util.ImportI
 		exec.setDir(pkgPath)
 		exec.run("git", "checkout", info.Version)
 	}
+
 	info.Version = getLastGitCommitHash(pkgPath)
-	log.Printf("Package %s at %s\n", info.Package, info.Version)
+	log.Printf("Add package %s#%s\n", info.Package, info.Version)
+}
+
+// 下载所有隐含的依赖
+func downloadAllImplicitDependences(pkg *util.PackageInfo, exec *execObject) int {
+	list := util.GetSourceImportsFromDir(pkg.Dir.Vendor)
+	debugPrintln("implicit dependences:\n" + strings.Join(list, "\n"))
+	count := 0
+	for _, item := range list {
+		p := pkg.GetImportInfo(item)
+		if p == nil {
+			count++
+			pkg.AddImport(item, "*")
+			p = pkg.GetImportInfo(item)
+			downloadPackage(pkg, exec, p)
+		}
+	}
+	return count
 }
 
 // 判断目录是否为 Git 仓库
