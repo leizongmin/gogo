@@ -43,6 +43,9 @@ $ gogo install
 # 执行 go 命令，以下命令相当于 go env
 $ gogo - env
 
+# 执行其他命令
+$ gogo run env
+
 # 删除 vendor 和 _workspace 目录
 $ gogo clean
 # 执行了 gogo clean 后，要继续使用时必须必须先执行 gogo init

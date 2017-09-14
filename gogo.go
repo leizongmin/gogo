@@ -29,6 +29,8 @@ func main() {
 		cmd.Clean(args)
 	case "-":
 		cmd.Go(args)
+	case "run":
+		cmd.Run(args)
 	case "import":
 		cmd.Import(args)
 	case "init":

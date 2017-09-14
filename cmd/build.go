@@ -10,9 +10,7 @@ import (
 func Build(args []string) {
 	pkg, exec := getPackageInfoAndExec(false)
 	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		fmt.Println(`
-"_workspace" directory doesn't exists, please run "gogo init" before.
-		`)
+		log.Println(`"_workspace" directory doesn't exists, please run "gogo init" before.`)
 		return
 	}
 	out := fmt.Sprintf("bin/%s", filepath.Base(pkg.Package))
