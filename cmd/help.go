@@ -54,7 +54,10 @@ The commands are:
     gogo version    print gogo version information
     gogo - <cmd>    run any go command
                     e.g. gogo - env
-                         gogo - vet
+						 gogo - vet
+	gogo run <cmd>  run any command
+					e.g. gogo run env
+                         gogo run go env
 
 Use "gogo help [command]" for more information about a command.
 If you want to get more debug output, set environment "GOGO_DEBUG=1"
