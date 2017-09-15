@@ -18,7 +18,9 @@ func Dev(args []string) {
 	}
 	out := fmt.Sprintf("bin/%s", filepath.Base(pkg.Package))
 	exec.setDir(pkg.Dir.Pwd)
-	ret := exec.run("go", "build", "-o", out, pkg.Package)
+	buildArgs := append([]string{"build"}, args...)
+	buildArgs = append(buildArgs, "-o", out, pkg.Package)
+	ret := exec.run("go", buildArgs...)
 	fmt.Print(ret)
 	log.Println("OK")
 
