@@ -16,10 +16,14 @@ func Help(args []string) {
 	switch args[0] {
 	case "build":
 		BuildHelp(args[1:])
+	case "dev":
+		DevHelp(args[1:])
+	case "run":
+		RunHelp(args[1:])
 	case "clean":
 		CleanHelp(args[1:])
 	case "help":
-		fmt.Printf("print the help information\n\n")
+		fmt.Printf("Print the help information\n\n")
 	case "import":
 		ImportHelp(args[1:])
 	case "init":
