@@ -11,13 +11,7 @@ import (
 
 // Install 安装依赖模块
 func Install(args []string) {
-	pkg, exec := getPackageInfoAndExec(true)
-	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		log.Println(`
-"_workspace" directory doesn't exists, please run "gogo init" before.
-		`)
-		return
-	}
+	pkg, exec := getPackageInfoAndExecAndEnsureInited(true)
 	if len(pkg.Import) > 0 {
 		for _, p := range pkg.Import {
 			downloadPackage(pkg, exec, p)

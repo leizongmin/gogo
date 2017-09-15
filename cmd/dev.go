@@ -11,11 +11,7 @@ import (
 
 // Dev 构建项目并运行
 func Dev(args []string) {
-	pkg, exec := getPackageInfoAndExec(false)
-	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		log.Println(`"_workspace" directory doesn't exists, please run "gogo init" before.`)
-		return
-	}
+	pkg, exec := getPackageInfoAndExecAndEnsureInited(false)
 	out := fmt.Sprintf("bin/%s", filepath.Base(pkg.Package))
 	exec.setDir(pkg.Dir.Pwd)
 	buildArgs := append([]string{"build"}, args...)

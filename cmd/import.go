@@ -10,13 +10,7 @@ import (
 
 // Import 添加模块依赖
 func Import(args []string) {
-	pkg, exec := getPackageInfoAndExec(true)
-	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
-		log.Println(`
-"_workspace" directory doesn't exists, please run "gogo init" before.
-		`)
-		return
-	}
+	pkg, exec := getPackageInfoAndExecAndEnsureInited(true)
 
 	count := 0
 	packages := make([]string, len(pkg.Import))

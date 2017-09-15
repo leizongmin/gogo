@@ -86,6 +86,15 @@ func getPackageInfoAndExec(isVendor bool) (*util.PackageInfo, *execObject) {
 	return pkg, exec
 }
 
+func getPackageInfoAndExecAndEnsureInited(isVendor bool) (*util.PackageInfo, *execObject) {
+	pkg, exec := getPackageInfoAndExec(isVendor)
+	if !isWorkspaceDirExists(pkg.Dir.Pwd) {
+		log.Fatal(`"_workspace" directory doesn't exists, please run "gogo init" before.`)
+		return nil, nil
+	}
+	return pkg, exec
+}
+
 // 合并字符串数组
 func combineStringArray(a []string, b []string) []string {
 	ret := make([]string, len(a)+len(b))
