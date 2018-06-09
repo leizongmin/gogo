@@ -6,6 +6,7 @@
 
 * 使得 Go 项目可以脱离全局设置的 `GOPATH` 指定的路径
 * 兼容 go 命令及其他第三方包管理工具，比如 dep
+* 兼容主流编辑器
 
 ## 安装
 
@@ -67,6 +68,18 @@ gogo clean
 在执行`gogo init`之后，会创建一个`_workspace`目录，实际上这个目录为`GOPATH`环境变量的值，在配置编辑器的`GOPATH`时可设置为此`_workspace`目录。
 
 可执行`gogo - env`查看 Go 打印出来的环境变量值。
+
+### 在 Visual Studio Code 编辑器中使用
+
+使用 **ms-vscode.go** 插件，添加以下编辑器配置（推荐修改文件 `.vscode/settings/json`）：
+
+```json
+{
+  "go.gopath": "${workspaceRoot}/_workspace:/_YOUR_GLOBAL_GOPATH_"
+}
+```
+
+说明：其中 `_YOUR_GLOBAL_GOPATH_` 原本的全局 GOPATH 路径，主要是用于 Go 插件安装必须的命令行工具。
 
 ## `gogo`开发环境配置
 
