@@ -1,5 +1,7 @@
 'use strict';
 
+// 使用 https://www.npmjs.com/package/lei-run 命令运行
+
 const pkg = 'github.com/leizongmin/gogo';
 
 const pkgParent = path.dirname(pkg);
