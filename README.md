@@ -5,6 +5,7 @@
 ## 目标
 
 * 使得 Go 项目可以脱离全局设置的 `GOPATH` 指定的路径
+* 兼容 go 命令及其他第三方包管理工具，比如 dep
 
 ## 安装
 
@@ -23,8 +24,8 @@ version: 0.0.0
 
 说明：
 
-+ `package`为包的完整路径，比如 GitHub 用户名是`leizongmin`，要创建的包是`example`，那么包的完整路径就是`github.com/leizongmin/example`。别人在使用时可以通过`import "github.com/leizongmin/example"`来引入
-+ `version`为当前包的版本号，目前相关功能暂未实现
+* `package`为包的完整路径，比如 GitHub 用户名是`leizongmin`，要创建的包是`example`，那么包的完整路径就是`github.com/leizongmin/example`。别人在使用时可以通过`import "github.com/leizongmin/example"`来引入
+* `version`为当前包的版本号，目前相关功能暂未实现
 
 创建完`package.yaml`文件后，可以在包的根目录下执行以下命令：
 
@@ -91,8 +92,8 @@ gogo build
 
 ## 案例
 
-+ [gogo](https://github.com/leizongmin/gogo) - 简单易用的Go包管理工具
-+ [leisp](https://github.com/leizongmin/leisp) - The leisp programming language written in Go
+* [gogo](https://github.com/leizongmin/gogo) - 简单易用的Go包管理工具
+* [leisp](https://github.com/leizongmin/leisp) - The leisp programming language written in Go
 
 ## License
 
