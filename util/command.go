@@ -11,6 +11,11 @@ import (
 
 var phosphorize = ansi.ColorFunc("gray+h")
 
+// LookupExecPath 查询命令完整路径
+func LookupExecPath(name string) (path string, err error) {
+	return exec.LookPath(name)
+}
+
 // Command 命令结构体
 type Command struct {
 	execPath     string

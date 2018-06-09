@@ -1,11 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
 	"github.com/leizongmin/gogo/cmd"
+	"github.com/leizongmin/gogo/util"
+	"github.com/mgutz/ansi"
 )
+
+var red = ansi.ColorFunc("red+h")
 
 func main() {
 
@@ -44,7 +49,14 @@ func main() {
 	case "help":
 		cmd.Help(args)
 	default:
-		cmd.Help(args)
+		var execCmd, err = util.LookupExecPath(os.Args[1])
+		if err != nil {
+			fmt.Println(red(err.Error()))
+			fmt.Println()
+			cmd.Help(args)
+		} else {
+			cmd.Run(append([]string{execCmd}, args...))
+		}
 	}
 
 }
