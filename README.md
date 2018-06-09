@@ -1,10 +1,15 @@
 # gogo
+
 简单易用的Go包管理工具
+
+## 目标
+
+* 使得 Go 项目可以脱离全局设置的 `GOPATH` 指定的路径
 
 ## 安装
 
 ```bash
-$ go get -u github.com/leizongmin/gogo
+go get -u github.com/leizongmin/gogo
 ```
 
 ## 使用
@@ -25,34 +30,34 @@ version: 0.0.0
 
 ```bash
 # 第一步：初始化，创建虚拟 _workspace 目录和 vendor 目录
-$ gogo init
+gogo init
 
 # 第二步：添加依赖并保存到 package.yaml
-$ gogo import github.com/leizongmin/leisp
+gogo import github.com/leizongmin/leisp
 
 # 第三步：构建
-$ gogo build
+gogo build
 
 # 开发时可以使用以下命令构建并直接执行
-$ gogo dev
+gogo dev
 # 如果有参数可以直接在后面添加
-$ gogo dev arg1 arg2
+gogo dev arg1 arg2
 ```
 
 使用过程中还可以执行以下命令：
 
 ```bash
 # 根据 pakcage.yaml 安装所有依赖
-$ gogo install
+gogo install
 
 # 执行 go 命令，以下命令相当于 go env
-$ gogo - env
+gogo - env
 
 # 执行其他命令
-$ gogo run env
+gogo run env
 
 # 删除 vendor 和 _workspace 目录
-$ gogo clean
+gogo clean
 # 执行了 gogo clean 后，要继续使用时必须必须先执行 gogo init
 ```
 
@@ -62,39 +67,36 @@ $ gogo clean
 
 可执行`gogo - env`查看 Go 打印出来的环境变量值。
 
-
 ## `gogo`开发环境配置
 
 ```bash
 # 安装 gogo 工具
-$ go get -u github.com/leizongmin/gogo
+go get -u github.com/leizongmin/gogo
 
 # 下载代码
-$ git clone https://github.com/leizongmin/gogo.git && cd gogo
+git clone https://github.com/leizongmin/gogo.git && cd gogo
 
 # 初始化
-$ gogo init
+gogo init
 
 # 安装依赖模块
-$ gogo install
+gogo install
 
 # 修改文件之后，编译代码
-$ gogo build
+gogo build
 
 # 执行编译出来的 gogo 命令
-$ ./bin/gogo
+./bin/gogo
 ```
-
 
 ## 案例
 
 + [gogo](https://github.com/leizongmin/gogo) - 简单易用的Go包管理工具
 + [leisp](https://github.com/leizongmin/leisp) - The leisp programming language written in Go
 
-
 ## License
 
-```
+```text
 MIT License
 
 Copyright (c) 2016-2017 Zongmin Lei <leizongmin@gmail.com>
